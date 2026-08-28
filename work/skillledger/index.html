@@ -59,12 +59,15 @@ at the database layer, so every balance check ran as C# logic inside a <code>Ser
 instead.</p>
 <p>In exchange, a leaked database export would have exposed no balances, and every transaction row
 carried an HMAC-SHA256 signature, with a <code>KeyIdentifier</code> column reserved for key rotation.</p>
-<p>A self-commissioned audit of that wiring later found three gaps between the design and the running
-code: <code>Program.cs</code> never bound the key-vault configuration, so the flag gating a real Azure key
-stayed <code>false</code> in every environment; both signing keys resolved to hashes of hardcoded string
-constants; and the key-rotation method behind the <code>KeyIdentifier</code> column logged “not yet implemented”
-and returned <code>true</code>, reporting success on a rotation that never ran. None of it touched the
-column-level encryption itself: the database still never held a plaintext balance.</p>
+<p>A self-commissioned audit of that wiring later found gaps between the design and the running code:
+<code>Program.cs</code> never bound the key-vault configuration, so the flag gating a real Azure key stayed
+<code>false</code> in every environment and both signing keys resolved to hashes of hardcoded string
+constants; the branch that does reach Key Vault fetches a real key object and then discards it,
+deriving the AES key as a hash of the key’s name and the current calendar month instead, so wiring
+the flag correctly would not have fixed it; and the key-rotation method behind the <code>KeyIdentifier</code>
+column logged “not yet implemented” and returned <code>true</code>, reporting success on a rotation that never
+ran. None of it touched the column-level encryption itself: the database still never held a
+plaintext balance.</p>
 <h2 id="architecture">Architecture</h2>
 <p>Three .NET projects (Api, Core, and Infrastructure) sat in front of a Next.js frontend, over
 PostgreSQL. <code>Program.cs</code> was the composition root, and every one of its 93 service registrations was

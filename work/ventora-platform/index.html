@@ -73,10 +73,10 @@ against it, so that agreement was proven rather than asserted. The cost was a ne
 Worker kept alive for a single template render, in exchange for a signature scheme proven correct
 across both languages before it shipped.</p>
 <h2 id="architecture">Architecture</h2>
-<p>Everything in the repository except five packages was published as a versioned package and consumed
-as a private dependency by other products; nothing else here was a deployment target in its own
-right.</p>
-<p>The five exceptions were the deployed Cloudflare Workers. <code>email-renderer</code> let Python render React
+<p>Five packages were deployed Cloudflare Workers. Everything else in the repository was published as
+a versioned package and installed by other products as a private dependency, never deployed on its
+own.</p>
+<p><code>email-renderer</code> let Python render React
 Email templates without a JS runtime, over the HMAC-signed bridge above. <code>ai-sdr-worker</code> held
 anonymous marketing-assistant session state in a Durable Object, with a durable outbox and an
 alarm-driven retry ladder (0s, 30s, 2m, 10m, 1h) so a streaming reply never waited on a lead push to

@@ -74,12 +74,12 @@ general benefit of asking a model to reason before it answers. Three arenas sepa
 from evidence: <code>dev</code> and <code>screen</code> may change the skill freely and never emit a verdict; <code>confirm</code>
 targets a private holdout and does emit one, and code enforces that split rather than discipline.</p>
 <p>The same discipline governs what gets published about it. The sharpest finding the harness has
-produced so far is about its own instrument: the corpus behind the earlier results was largely
-solvable without a model. That applies to the second version of the answer key. On the rebuilt
-corpus the best depth-2 stump over eight trivial features scores 0.7054 against a 0.6667
-majority-class baseline, and answer key version 5 has since widened it to 330 items so that all six
-procedures have positives. The version 2 and version 4 keys are kept apart, and <code>SCORECARD.md</code>
-carries both figures with the arms measured against each.</p>
+produced so far is about its own instrument. The corpus behind the earlier results was largely
+solvable without a model: on the second version of the answer key a bare word-count rule scored
+0.890. The rebuilt corpus is harder, and the best depth-2 stump over eight trivial features scores
+0.7054 on it against a 0.6667 majority-class baseline. Answer key version 5 has since widened it to
+330 items so that all six procedures have positives. The version 2 and version 4 keys are kept
+apart, and <code>SCORECARD.md</code> carries both figures with the arms measured against each.</p>
 <p>The skill itself is one entry point that reads what’s hard about a decision, such as too much
 unranked context, advice that might not fit the person, or consequences that fork downstream, and
 routes to one of six procedures built for that shape rather than running every procedure on every
